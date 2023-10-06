@@ -1,16 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-// import './App.css'
+import './App.css';
+import Organisation from './components/Organisation';
+import User from './components/User';
+import Navbar from './components/Navbar';
+import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      NFT Certificate Generator and Validator
+    <BrowserRouter>
+    <Navbar/>
+      <Routes>
+      <Route path='/' element = {<Organisation/>}/>
+      <Route path='/user' element = {<User/>}/>
+      </Routes>
+    </BrowserRouter>
+
     </>
-  )
+  );
 }
 
-export default App
+export default App;
