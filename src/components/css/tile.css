@@ -1,0 +1,9 @@
+#tile{
+    display: flex;
+    margin: 15px;
+    margin-left: 25px;
+    border:2px solid black;
+}
+#tile p{
+    margin: 15px;
+}

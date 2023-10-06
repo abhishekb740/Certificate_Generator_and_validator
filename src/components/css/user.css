@@ -1,0 +1,20 @@
+#user{
+    margin: 10px;
+    justify-content: center;
+    text-align: center;
+    /*display: flex;*/
+}
+#user input{
+    width: 28% ;
+    margin: auto;
+    padding: 5px;
+    border-radius: 10px;
+    display: block;
+}
+#user button{
+    /*display: block;*/
+    /*padding: 10px;*/
+    margin: 10px;
+    padding: 5px;
+    border-radius: 10px;
+}
