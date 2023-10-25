@@ -37,28 +37,27 @@ function Navbar() {
     await window.ethereum.request({ method: 'eth_requestAccounts' })
         .then(() => {
         updateButton();
-        console.log("here");
         getAddress();
+        toggleConnect(true);
         //window.location.replace(location.pathname)
         });
     }
 
-  useEffect(() => {
-    if(window.ethereum == undefined)
-      return;
-    let val = window.ethereum.isConnected();
-    if(val)
-    {
-      console.log("here");
-      getAddress();
-      toggleConnect(val);
-      updateButton();
-    }
+  //useEffect(() => {
+  //  if(window.ethereum == undefined)
+  //    return;
+  //  let val = window.ethereum.isConnected();
+  //  if(val)
+  //  {
+  //    getAddress();
+  //    toggleConnect(val);
+  //    updateButton();
+  //  }
 
-    window.ethereum.on('accountsChanged', function(accounts){
-    //  window.location.replace(location.pathname)
-    })
-  });
+  //  window.ethereum.on('accountsChanged', function(accounts){
+  //  //  window.location.replace(location.pathname)
+  //  })
+  //});
   return (
     <>
     <div id='nav'>
@@ -76,7 +75,7 @@ function Navbar() {
       </li>
       <li>
 
-        <button className="enableEthereumButton" onClick={connectWebsite}>{connected? "Connected":"Connect Wallet"}</button>
+        <button className="enableEthereumButton" onClick={connectWebsite}>{connected ? "Connected":"Connect Wallet"} </button>
       </li>
     </ul>
         
