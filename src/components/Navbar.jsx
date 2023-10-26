@@ -36,27 +36,27 @@ function Navbar() {
     await window.ethereum.request({ method: 'eth_requestAccounts' })
       .then(() => {
         updateButton();
-        console.log("here");
         getAddress();
+        toggleConnect(true);
         //window.location.replace(location.pathname)
       });
   }
 
-  useEffect(() => {
-    if (window.ethereum == undefined)
-      return;
-    let val = window.ethereum.isConnected();
-    if (val) {
-      console.log("here");
-      getAddress();
-      toggleConnect(val);
-      updateButton();
-    }
+  //useEffect(() => {
+  //  if(window.ethereum == undefined)
+  //    return;
+  //  let val = window.ethereum.isConnected();
+  //  if(val)
+  //  {
+  //    getAddress();
+  //    toggleConnect(val);
+  //    updateButton();
+  //  }
 
-    window.ethereum.on('accountsChanged', function (accounts) {
-      //  window.location.replace(location.pathname)
-    })
-  });
+  //  window.ethereum.on('accountsChanged', function(accounts){
+  //  //  window.location.replace(location.pathname)
+  //  })
+  //});
   return (
     <>
       <div id='nav'>
@@ -77,6 +77,7 @@ function Navbar() {
             </li>
           </ul>
 
+          <button className="enableEthereumButton" onClick={connectWebsite}>{connected ? "Connected" : "Connect Wallet"} </button>
           <p>
             {currAddress !== "0xaa36a7" ? "Connected to" : "Not Connected. Please login"} {currAddress !== "0xaa36a7" ? (currAddress.substring(0, 15) + '...') : ""}
           </p>

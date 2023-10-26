@@ -2,21 +2,25 @@
     padding: 0;
     margin: 0;
 }
+
 #nav{
     background-color: gray;
     padding: 10px;
     justify-content: center;
 }
+
 #nav ul{
     list-style: none;
     justify-content: space-between;
     text-align: center;
 }
+
 #nav li{
     display: inline-block;
     justify-content:space-between;
     margin-left: 10px;
 }
+
 #nav p{
     /*display: inline-block;*/
     justify-content: center;
