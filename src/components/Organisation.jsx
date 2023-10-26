@@ -3,7 +3,6 @@ import './css/org.css';
 import domtoimage from 'dom-to-image';
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../pinata";
 import Marketplace from '../ABI/abi.json';
-//const ethers = require("ethers");
 import {ethers} from "ethers";
 
 const data = [
@@ -23,10 +22,34 @@ function Organisation() {
     let [img , setImage] = useState("");
     const [fileURL, setFileURL] = useState(null);
     const [message, updateMessage] = useState('');
+
+    async function OnChangeFileThroughUpload(e)
+    {
+        var file = e.target.files[0];
+        //if(!img) {setImage(e.target.files[0]);}
+        //console.log(e.target.files[0]);
+        updateMessage("Uploading image Please wait");
+        try{
+            const response = await uploadFileToIPFS(file);
+            if(response.success === true)
+            {
+                updateMessage("Uploaded Img Successfully");
+                setFileURL(response.pinataURL);
+            }
+        }
+        catch(err)
+        {
+            updateMessage("Failed to upload image please try again");
+            console.log("error during file upload : " , err);
+        }
+
+    }
     
     async function OnChangeFile(e)
     {
-        if(!img) {console.log("image not set");return;}
+        console.log(img);
+        //if(!img) {setImage(e.target.files[0]);}
+        //console.log(e.target.files[0]);
         updateMessage("Uploading image Please wait");
         try{
             const response = await uploadFileToIPFS(img);
@@ -41,15 +64,18 @@ function Organisation() {
             updateMessage("Failed to upload image please try again");
             console.log("error during file upload : " , err);
         }
-
     }
     async function uploadMetadataToIPFS()
     {
-        if(!name || !fileURL)
+        if(!fileURL)
         {
             updateMessage("Please try again");
             console.log("name or fileURL not set", name , fileURL);
             return;
+        }
+        if(!name)
+        {
+            name = "SAMPLE"
         }
 
         const nftJSON = {
@@ -66,8 +92,8 @@ function Organisation() {
         }
         catch(e)
         {
-            updateMessage("Error uploading JSON metadata")
-            console.log("Error uploading JSON metadata" , e);
+            updateMessage("Error uploading JSON metadata");
+            alert("Error uploading JSON metadata" , e);
         }
     }
     async function listNFT(e)
@@ -78,7 +104,7 @@ function Organisation() {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
 
-            updateMessage("Please wait....");
+            updateMessage("Please wait for 30 second");
 
             let contract = new ethers.Contract(Marketplace.address , Marketplace.abi , signer);
             
@@ -93,7 +119,7 @@ function Organisation() {
         catch(e)
         {
             updateMessage("Please try again");
-            console.log("upload error" , e);
+            alert("upload error" , e);
         }
     }
     function dataURLtoFile(dataurl, filename) {// to convert base64 to img
@@ -114,7 +140,6 @@ function Organisation() {
 
     }
     function setSample(e ,index){
-        //document.getElementById("highlight-selected").style.border = "2px solid black";
         setIndex(index);
     }
   return (
@@ -123,6 +148,7 @@ function Organisation() {
     {/* Certificate information edit preview section */}
     <div id="meta-data">
         {/*<h1>Certificate</h1>*/}
+        <h2>Create Certificate</h2>
         <p>Enter Name</p>
         <input type="text" value={name} placeholder="Enter the name" 
         onChange={(e)=>{setName(e.target.value)}}></input>
@@ -142,16 +168,28 @@ function Organisation() {
         
         <br></br>
         <button onClick={(e)=>MintSend(e)}>Save Information</button>
-        <br></br>
         <button onClick={(e)=> OnChangeFile(e)}>Upload Certificate</button>
         <br></br>
         <p>Enter public address of user</p>
         <input type="text" value={receiverAddress} placeholder="Enter the address" 
         onChange={(e)=>{setReceiverAddress(e.target.value)}}></input>
-        <br></br>
         <button onClick={(e)=> listNFT(e)}>Send</button>
         <br></br>
         <p>{message}</p>
+        <h2>OR Upload Certificate</h2>
+        <br></br>
+        <div>
+            <label htmlFor="image">Upload Image (&lt;500 KB)</label>
+            <br></br>
+            <input type={"file"} onChange={OnChangeFileThroughUpload}></input>
+            {/*<button onClick={(e)=> OnChangeFile(e)}>Upload Certificate</button>*/}
+        </div>
+        <br></br>
+        <div>{message}</div>
+        <p>Enter public address of user</p>
+        <input type="text" placeholder="Enter the address" 
+        onChange={(e)=>{setReceiverAddress(e.target.value)}}></input>
+        <button onClick={listNFT} id="list-button">Send</button>
     </div>
     {/* show data on selected certificate */}
     <div id="img-cer">
@@ -168,7 +206,7 @@ function Organisation() {
     <div id="sample-img">
         {data.map((value , index)=>{
             {/*console.log(data[index].image);*/}
-            return<img id="highlight-selected" onClick={(e) =>{setSample(e , index)}} src={value.image}></img>
+            return<img key={index} id="highlight-selected" onClick={(e) =>{setSample(e , index)}} src={value.image}></img>
         })}
     </div>
     </>
