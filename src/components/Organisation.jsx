@@ -3,7 +3,6 @@ import './css/org.css';
 import domtoimage from 'dom-to-image';
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../pinata";
 import Marketplace from '../ABI/abi.json';
-//const ethers = require("ethers");
 import {ethers} from "ethers";
 
 const data = [
@@ -41,7 +40,6 @@ function Organisation() {
             updateMessage("Failed to upload image please try again");
             console.log("error during file upload : " , err);
         }
-
     }
     async function uploadMetadataToIPFS()
     {
@@ -168,7 +166,7 @@ function Organisation() {
     <div id="sample-img">
         {data.map((value , index)=>{
             {/*console.log(data[index].image);*/}
-            return<img id="highlight-selected" onClick={(e) =>{setSample(e , index)}} src={value.image}></img>
+            return<img key={index} id="highlight-selected" onClick={(e) =>{setSample(e , index)}} src={value.image}></img>
         })}
     </div>
     </>

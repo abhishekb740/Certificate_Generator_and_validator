@@ -24,7 +24,7 @@ contract Certificate is ERC721URIStorage{
     //for organisation side
     //get information about certificate by entering tokenId
     function getListedForTokenId(uint256 tokenId) public view returns(ListedToken memory)
-    { 
+    {
         return idToListedToken[tokenId];
     }
     // return current token id
