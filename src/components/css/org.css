@@ -90,6 +90,15 @@
     left: 320px
 
 }
+
+/* #meta-data.input[type=text]{
+    box-sizing: border-box;
+    padding : 12px 20px;
+    margin : 4px; 
+    border: none;
+    border-bottom: 2px solid red;
+} */
+
 h1{
     text-align: center;
     /*margin: 20px;*/
