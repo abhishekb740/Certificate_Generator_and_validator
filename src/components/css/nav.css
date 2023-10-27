@@ -34,7 +34,8 @@
 
 #nav a.title {
     font-size: 40px;
-    color:blue;
+    font-family: "Bradley Hand, cursive";
+    color:#eec0c8;
     text-decoration: none;
 }
 
@@ -52,6 +53,8 @@
 
 .enableEthereumButton {
     background-color: black;
+    margin-top: 8px;
+    margin-bottom: 8px;
     border-style:dotted;
     font-size: 20px;
     color: white;
