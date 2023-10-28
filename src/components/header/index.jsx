@@ -11,9 +11,47 @@ import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-
+import Certificate from "../../ABI/abi.json";
+import { ethers } from "ethers";
+import { useState } from 'react';
 
 export default function Header() {
+    const [accountAddr, setAccountAddr] = useState("");
+    const [contract, setContract] = useState(null)
+    const [provider, setProvider] = useState(null);
+    const connectToMetamask = async () => {
+        const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+        if (chainId !== '0x33') {
+            //alert('Incorrect network! Switch your metamask network to Rinkeby');
+            await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: '0x33' }],
+            })
+        }
+        await window.ethereum.request({ method: 'eth_requestAccounts' }).then(async () => {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            if (provider) {
+                setProvider(provider);
+                window.ethereum.on('chainChanged', () => {
+                    window.location.reload();
+                })
+                window.ethereum.on('accountsChanged', () => {
+                    window.location.reload();
+                })
+                const signer = provider.getSigner();
+                console.log(signer);
+                const addr = await signer.getAddress();
+                console.log(addr);
+                setAccountAddr(addr);
+                const contract = new ethers.Contract(Certificate.address, Certificate.abi, signer);
+                setContract(contract);
+                console.log(contract);
+            }
+            else {
+                alert("Please Install Metamask First");
+            }
+        })
+    }
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -136,6 +174,7 @@ export default function Header() {
                             justifyContent: "center",
                             cursor: "pointer"
                         }}
+                        onClick={connectToMetamask}
                     >
                         <IconButton
                             size="large"
@@ -152,7 +191,7 @@ export default function Header() {
                             variant='body1'
                             fontWeight={500}
                         >
-                            Login
+                            {accountAddr ? accountAddr.slice(0, 6) + "..." + accountAddr.slice(-4) : "Connect To Metamask"}
                         </Typography>
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

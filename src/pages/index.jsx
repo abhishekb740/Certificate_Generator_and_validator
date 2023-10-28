@@ -16,6 +16,7 @@ const panels = {
 }
 
 export default function IndexPage() {
+    
     const [value, setValue] = useState(Object.keys(panels)[0]);
     const handleChange = (_, newValue) => {
         setValue(newValue);
