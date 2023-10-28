@@ -54,7 +54,7 @@ export default function IssueCertificatePage() {
         return await new File([u8arr], 'a.png', { type: mime });
     }
 
-    const uploadMeta = async () => {
+    const uploadMeta = async (fileUrl) => {
         if (!fileUrl) {
             updateMessage("Please try again");
             console.log("name or fileURL not set", receiverName, fileUrl);
@@ -84,24 +84,28 @@ export default function IssueCertificatePage() {
     async function uploadImage(e) {
         e.preventDefault()
         await domToImage.toJpeg(document.getElementById(styles.certificateImage))
-            .then(async res => await setImage(await dataUrlToFile(res)))
-            .then(async () => {
+            .then(async (res) => {
+                const img = await dataUrlToFile(res)
+                await setImage(img)
                 updateMessage("Uploading image Please wait");
-                await uploadFileToIPFS(image).then(async res => {
-                    console.log(res)
-                    updateMessage("Uploaded Image successfully")
-                    await setFileUrl(res.pinataURL)
-                })
-                .catch(err => {
-                    updateMessage("Failed to upload image")
-                    console.log(err)
-                })
+                const a = await uploadFileToIPFS(img)
+                    .then(async res => {
+                        console.log(res)
+                        updateMessage("Uploaded Image successfully")
+                        await setFileUrl(res.pinataURL)
+                        return res.pinataURL
+                    })
+                    .catch(err => {
+                        updateMessage("Failed to upload image")
+                        console.log(err)
+                    })
                 console.log(fileUrl)
                 setModalOpen(false)
+                return a
             })
-            .then(async () => {
+            .then(async (fileUrl) => {
                 try {
-                    const metadataURL = await uploadMeta();
+                    const metadataURL = await uploadMeta(fileUrl);
                     console.log(metadataURL)
                     const provider = new ethers.providers.Web3Provider(window.ethereum);
                     const signer = provider.getSigner();
