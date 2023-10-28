@@ -156,7 +156,7 @@ export default function UploadCertificatePage() {
                             width: "100%"
                         }}
                     >
-                        {fileURL && <img src={fileURL} alt="certificate" style={{ width: "100%" }} />}
+                        {fileURL && <img src={fileURL} alt="certificate" style={{ width: "100%", maxHeight: "60vh" }} />}
                     </Paper>
                 </div>
 
