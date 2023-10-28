@@ -205,30 +205,34 @@ export default function IssueCertificatePage() {
                     <Paper
                         sx={{
                             width: "100%",
-                            height: "100%"
+                            height: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            padding: '1rem'
                         }}
-                        id={styles.certificateImage}
                     >
-                        <input 
-                            type="text" 
-                            value={receiverName} 
-                            disabled="disabled" 
-                            className={styles.dataName} 
-                        />
-                        <textarea 
-                            type="text" 
-                            value={receiverDes} 
-                            disabled="disabled" 
-                            className={styles.dataDes} 
-                        />
-                        <input 
-                            type="text" 
-                            value={moment().format("DD-MM-YYYY")} 
-                            disabled="disabled" 
-                            className={styles.dataDate} 
-                        />
-                        {sign && <img id={styles.sign} src={sign}></img>}
-                        <img id={styles.cerData} src={data[index]}></img>
+                        <div id={styles.certificateImage}>
+                            <input 
+                                type="text" 
+                                value={receiverName} 
+                                disabled="disabled" 
+                                className={styles.dataName} 
+                            />
+                            <textarea 
+                                type="text" 
+                                value={receiverDes} 
+                                disabled="disabled" 
+                                className={styles.dataDes} 
+                            />
+                            <input 
+                                type="text" 
+                                value={moment().format("DD-MM-YYYY")} 
+                                disabled="disabled" 
+                                className={styles.dataDate} 
+                            />
+                            {sign && <img id={styles.sign} src={sign}></img>}
+                            <img id={styles.cerData} src={data[index]}></img>
+                        </div>
                     </Paper>
                 </div>
             </Paper>
