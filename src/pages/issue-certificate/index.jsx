@@ -201,6 +201,9 @@ export default function IssueCertificatePage() {
                                 onChange={handleChangeSign}
                             />
                         </Button>
+                        <Button onClick={() => setModalOpen(true)} variant='contained'>
+                            Submit
+                        </Button>
                     </Paper>
                     <Paper
                         sx={{
