@@ -8,12 +8,14 @@ import { useState } from "react";
 import RegisterPage from "./register";
 import { Container, Paper } from "@mui/material";
 import IssueCertificatePage from "./issue-certificate";
+import UploadCertificatePage from "./upload-certificate";
 
 const panels = {
     "Registration": <RegisterPage />,
     "Issue Certificates": <IssueCertificatePage />,
-    "Issued Certificates": "3",
-    "Transaction History": "4"
+    "Upload Certificates": <UploadCertificatePage/>,
+    "Issued Certificates": "4",
+    "Transaction History": "5"
 }
 
 export default function IndexPage() {
@@ -22,7 +24,6 @@ export default function IndexPage() {
     const handleChange = (_, newValue) => {
         setValue(newValue);
     };
-
 
     return (
         <Layout>

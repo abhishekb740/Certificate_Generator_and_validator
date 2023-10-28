@@ -1,0 +1,112 @@
+#org{
+    display: flex;
+    margin: 10px;
+}
+#meta-data{
+    flex-grow: 0.5;
+    margin-left: 20px;
+    text-align: center;
+    justify-content: center;
+    font-size: 18px;
+}
+#meta-data input[type = text]{
+    margin: 3px;
+    padding: 5px;
+    box-sizing: border-box;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+#meta-data textarea{
+    padding: 5px;
+    box-sizing: border-box;
+    border: 2px solid black;
+    border-radius: 5px;
+    resize: none;
+    overflow: hidden;
+
+}
+#meta-data button{
+    padding: 3px;
+    margin: 5px;
+    border-radius: 10px;
+}
+#certificateImage {
+    overflow: hidden;
+    position: relative;
+}
+
+#cerData {
+    display: block;
+    width: 700px;
+    height: 500px;
+}
+#sign {
+    /*display: block;*/
+    position: absolute;
+    width: 50px;
+    height: 30px;
+    top: 395px;
+    left: 225px;
+}
+.dataName{
+    background-color: transparent;
+    color:black;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    top: 220px;
+    left: 52px;
+    position: absolute;
+    border: none;
+    width: 84%;
+    text-align: center;
+}
+.dataDes{
+    background-color: transparent;
+    color:black;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    width: 84%;
+    position: absolute;
+    text-align: center;
+    top: 260px;
+    left: 50px;
+    resize: none;
+    overflow: hidden;
+    min-height: 61px;
+
+
+}
+.dataDate{
+    background-color: transparent;
+    color:black;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    position: absolute;
+    text-align: center;
+    top: 400px;
+    left: 320px
+
+}
+
+/* #meta-data.input[type=text]{
+    box-sizing: border-box;
+    padding : 12px 20px;
+    margin : 4px; 
+    border: none;
+    border-bottom: 2px solid red;
+} */
+
+h1.heading {
+    text-align: center;
+    /*margin: 20px;*/
+    /*margin-right: 20px;
+    padding: 10px;*/
+}
+#sample-img img{
+    width: 380px;
+    height: 230px;
+    margin: 10px;
+}
