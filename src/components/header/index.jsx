@@ -11,11 +11,13 @@ import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import Certificate from "../../ABI/abi.json";
+import Certificate from "@ABI/abi.json";
 import { ethers } from "ethers";
 import { useState } from 'react';
+import { useAuth } from '@context/auth';
 
 export default function Header() {
+    const { setAuth } = useAuth() 
     const [accountAddr, setAccountAddr] = useState("");
     const [contract, setContract] = useState(null)
     const [provider, setProvider] = useState(null);
@@ -29,9 +31,8 @@ export default function Header() {
             })
         }
         await window.ethereum.request({ method: 'eth_requestAccounts' }).then(async () => {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            if (provider) {
-                setProvider(provider);
+            setProvider(new ethers.providers.Web3Provider(window.ethereum));
+            if (await provider) {
                 window.ethereum.on('chainChanged', () => {
                     window.location.reload();
                 })
@@ -43,9 +44,9 @@ export default function Header() {
                 const addr = await signer.getAddress();
                 console.log(addr);
                 setAccountAddr(addr);
-                const contract = new ethers.Contract(Certificate.address, Certificate.abi, signer);
-                setContract(contract);
+                setContract(new ethers.Contract(Certificate.address, Certificate.abi, signer));
                 console.log(contract);
+                setAuth({ accountAddr, contract, provider })
             }
             else {
                 alert("Please Install Metamask First");
