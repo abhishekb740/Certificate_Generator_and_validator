@@ -1,7 +1,16 @@
+<<<<<<< HEAD
 import { useState } from 'react';
 import './css/nav.css';
 import { Link } from 'react-router-dom';
+=======
+import { faUser, faUsersBetweenLines } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styles from "@styles/nav.module.scss";
+>>>>>>> 449a970b443e23f24dd43f86238914928687514d
 import { ethers } from "ethers";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 function Navbar() {
   const [connected, toggleConnect] = useState(false);
   const [currAddress, updateAddress] = useState('0xaa36a7');
@@ -16,7 +25,9 @@ function Navbar() {
   }
 
   function updateButton() {
-    const ethereumButton = document.querySelector('.enableEthereumButton');
+    console.log(styles.enableEthereumButton)
+    const ethereumButton = document.querySelector(`.${styles.enableEthereumButton}`);
+    console.log(ethereumButton)
     ethereumButton.textContent = "Connected";
     ethereumButton.classList.remove("hover:bg-blue-70");
     ethereumButton.classList.remove("bg-blue-500");
@@ -25,7 +36,6 @@ function Navbar() {
   }
 
   async function connectWebsite() {
-
     const chainId = await window.ethereum.request({ method: 'eth_chainId' });
     if (chainId !== '0x33') {
       //alert('Incorrect network! Switch your metamask network to Rinkeby');
@@ -60,25 +70,30 @@ function Navbar() {
   //});
   return (
     <>
-      <div id='nav'>
+      <div id={styles.nav}>
         <nav>
           <ul>
             <li>
+              <a href='/' className="title">Certificate Validator</a>
+            </li>
+            <li className='link'>
               <Link to="/">
+                <FontAwesomeIcon icon={faUsersBetweenLines} style={{ color: "#ebecf0", }} />
                 Organisation
               </Link>
             </li>
-            <li>
+            <li className='link'>
+              <FontAwesomeIcon icon={faUser} style={{ color: "#ebecf0", }} />
               <Link to="/user">
                 User
               </Link>
             </li>
             <li>
-              <button className="enableEthereumButton" onClick={connectWebsite}>{connected ? "Connected" : "Connect Wallet"}</button>
+              <button className={styles.enableEthereumButton} onClick={connectWebsite}>{connected ? "Connected" : "Connect Wallet"}</button>
             </li>
           </ul>
 
-          <button className="enableEthereumButton" onClick={connectWebsite}>{connected ? "Connected" : "Connect Wallet"} </button>
+          <button className={styles.enableEthereumButton} onClick={connectWebsite}>{connected ? "Connected" : "Connect Wallet"} </button>
           <p>
             {currAddress !== "0xaa36a7" ? "Connected to" : "Not Connected. Please login"} {currAddress !== "0xaa36a7" ? (currAddress.substring(0, 15) + '...') : ""}
           </p>

@@ -1,0 +1,64 @@
+* {
+    box-sizing: border-box;
+}
+
+#body {
+    margin: 0;
+}
+
+#nav {
+    background-color: #24252A;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 1rem;
+    width:100%;
+}
+
+#nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+#nav a {
+    color: inherit;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+#nav a.title {
+    font-size: 40px;
+    font-family: "Bradley Hand, cursive";
+    color:#eec0c8;
+    text-decoration: none;
+}
+
+#nav p.text {
+    color: #7CB9E8;
+    align-items: center;
+    font-family: "Montserrat", sans-serif;
+}
+
+#nav li.link {
+    align-self: center;
+    color: white;
+    font-size: 20px;
+}
+
+.enableEthereumButton {
+    background-color: black;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border-style:dotted;
+    font-size: 20px;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}

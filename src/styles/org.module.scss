@@ -30,17 +30,17 @@
     margin: 5px;
     border-radius: 10px;
 }
-#img-cer{
+#img-cer {
     overflow: hidden;
     position: relative;
 }
 
-#cer-data{
+#cer-data {
     display: block;
     width: 700px;
     height: 500px;
 }
-#sign{
+#sign {
     /*display: block;*/
     position: absolute;
     width: 50px;
@@ -90,7 +90,16 @@
     left: 320px
 
 }
-h1{
+
+/* #meta-data.input[type=text]{
+    box-sizing: border-box;
+    padding : 12px 20px;
+    margin : 4px; 
+    border: none;
+    border-bottom: 2px solid red;
+} */
+
+h1.heading {
     text-align: center;
     /*margin: 20px;*/
     /*margin-right: 20px;
