@@ -9,12 +9,13 @@ import RegisterPage from "./register";
 import { Container, Paper } from "@mui/material";
 import IssueCertificatePage from "./issue-certificate";
 import UploadCertificatePage from "./upload-certificate";
+import IssuedCertificatesPage from "./issued-certificates";
 
 const panels = {
     "Registration": <RegisterPage />,
     "Issue Certificates": <IssueCertificatePage />,
     "Upload Certificates": <UploadCertificatePage/>,
-    "Issued Certificates": "4",
+    "Issued Certificates": <IssuedCertificatesPage />,
     "Transaction History": "5"
 }
 

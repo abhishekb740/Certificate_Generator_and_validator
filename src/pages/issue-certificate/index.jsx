@@ -136,7 +136,6 @@ export default function IssueCertificatePage() {
                     background: "inherit",
                     padding: "1rem",
                 }}
-                className="something"
             >
                 <Typography component="div" variant="h3">Create your own certificate</Typography>
                 <div
