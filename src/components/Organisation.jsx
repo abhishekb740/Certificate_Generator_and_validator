@@ -3,11 +3,7 @@ import domtoimage from 'dom-to-image';
 import { ethers } from "ethers";
 import { useState } from "react";
 import Marketplace from '../ABI/abi.json';
-<<<<<<< HEAD
-import { ethers } from "ethers";
-=======
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../pinata";
->>>>>>> 449a970b443e23f24dd43f86238914928687514d
 
 const data = [
     { "image": "https://i.imgur.com/idG3CLO.png" },
@@ -46,7 +42,7 @@ function Organisation() {
 
     }
 
-    async function OnChangeFile(e) {
+    async function OnChangeFile() {
         console.log(img);
         //if(!img) {setImage(e.target.files[0]);}
         //console.log(e.target.files[0]);
@@ -123,11 +119,7 @@ function Organisation() {
     }
     async function MintSend(e) {
         e.preventDefault();
-<<<<<<< HEAD
-        await domtoimage.toJpeg(document.getElementById("img-cer")).then(function (data) {
-=======
         await domtoimage.toJpeg(document.getElementById(styles["img-cer"])).then(function (data) {
->>>>>>> 449a970b443e23f24dd43f86238914928687514d
             var file = dataURLtoFile(data, 'a.png');
             setImage(file);
             updateMessage("Information saved")
@@ -139,15 +131,10 @@ function Organisation() {
     }
     return (
         <>
-<<<<<<< HEAD
-            <div id="org">
-                <div id="meta-data">
-=======
             <div id={styles.org}>
                 {/* Certificate information edit preview section */}
                 <div id={styles["meta-data"]}>
                     {/*<h1>Certificate</h1>*/}
->>>>>>> 449a970b443e23f24dd43f86238914928687514d
                     <h2>Create Certificate</h2>
                     <p>Enter Name</p>
                     <input type="text" value={name} placeholder="Enter the name"
@@ -182,32 +169,11 @@ function Organisation() {
                         <label htmlFor="image">Upload Image (&lt;500 KB)</label>
                         <br></br>
                         <input type={"file"} onChange={OnChangeFileThroughUpload}></input>
-<<<<<<< HEAD
-=======
-                        {/*<button onClick={(e)=> OnChangeFile(e)}>Upload Certificate</button>*/}
->>>>>>> 449a970b443e23f24dd43f86238914928687514d
                     </div>
                     <br></br>
                     <div>{message}</div>
                     <p>Enter public address of user</p>
                     <input type="text" placeholder="Enter the address"
-<<<<<<< HEAD
-                        onChange={(e) => { setReceiverAddress(e.target.value) }}></input>
-                    <button onClick={listNFT} id="list-button">Send</button>
-                </div>
-                {/* show data on selected certificate */}
-                <div id="img-cer">
-                    <input type="text" value={name} disabled="disabled" className="data-name"></input>
-                    <textarea type="text" value={description} disabled="disabled" className="data-des"></textarea>
-                    <input type="text" value={date} disabled="disabled" className="data-date"></input>
-                    {sign && <img id="sign" src={sign}></img>}
-                    <img id="cer-data" style={{border: '2px solid black'}}  src={data[index].image}></img>
-                </div>
-            </div>
-            {/* Select design section */}
-            <h1>Select a Design</h1>
-            <div id="sample-img">
-=======
                         onChange={(e) => { setReceiverAddress(e.target.value) }} />
                     <button onClick={listNFT} id="list-button">Send</button>
                 </div>
@@ -224,7 +190,6 @@ function Organisation() {
             {/* Select design section */}
             <h1 className={styles.heading}>Select a Design</h1>
             <div id={styles["sample-img"]}>
->>>>>>> 449a970b443e23f24dd43f86238914928687514d
                 {data.map((value, index) => {
                     {/*console.log(data[index].image);*/ }
                     return <img key={index} id="highlight-selected" onClick={(e) => { setSample(e, index) }} src={value.image}></img>

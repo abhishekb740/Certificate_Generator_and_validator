@@ -1,15 +1,9 @@
-<<<<<<< HEAD
 import { useState } from 'react';
-import './css/nav.css';
 import { Link } from 'react-router-dom';
-=======
 import { faUser, faUsersBetweenLines } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "@styles/nav.module.scss";
->>>>>>> 449a970b443e23f24dd43f86238914928687514d
 import { ethers } from "ethers";
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 function Navbar() {
   const [connected, toggleConnect] = useState(false);
