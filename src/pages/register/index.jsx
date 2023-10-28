@@ -38,9 +38,9 @@ export default function RegisterPage() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                minHeight: "100vh",
+                minHeight: "100%",
                 flexDirection: "column",
-                width: "40%",
+                width: "60%",
                 gap: "1rem",
             }}
             >
