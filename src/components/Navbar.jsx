@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './css/nav.css';
 import { Link } from 'react-router-dom';
 import { ethers } from "ethers";
@@ -11,6 +11,7 @@ function Navbar() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const addr = await signer.getAddress();
+    console.log(addr);
     updateAddress(addr);
   }
 
@@ -26,11 +27,11 @@ function Navbar() {
   async function connectWebsite() {
 
     const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-    if (chainId !== '0xaa36a7') {
+    if (chainId !== '0x33') {
       //alert('Incorrect network! Switch your metamask network to Rinkeby');
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0xaa36a7' }],
+        params: [{ chainId: '0x33' }],
       })
     }
     await window.ethereum.request({ method: 'eth_requestAccounts' })
