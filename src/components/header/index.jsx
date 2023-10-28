@@ -24,12 +24,12 @@ export default function Header() {
     const connectToMetamask = async () => {
         const chainId = await window.ethereum.request({ method: 'eth_chainId' });
         if (chainId !== '0x33') {
-            //alert('Incorrect network! Switch your metamask network to Rinkeby');
             await window.ethereum.request({
                 method: 'wallet_switchEthereumChain',
                 params: [{ chainId: '0x33' }],
             })
         }
+        console.log("Heloooooooo");
         await window.ethereum.request({ method: 'eth_requestAccounts' }).then(async () => {
             setProvider(new ethers.providers.Web3Provider(window.ethereum));
             if (await provider) {
