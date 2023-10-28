@@ -60,6 +60,7 @@
     border: none;
     width: 84%;
     text-align: center;
+    max-width: 600px;
 }
 .dataDes{
     background-color: transparent;
@@ -75,8 +76,7 @@
     resize: none;
     overflow: hidden;
     min-height: 61px;
-
-
+    max-width: 600px;
 }
 .dataDate{
     background-color: transparent;
