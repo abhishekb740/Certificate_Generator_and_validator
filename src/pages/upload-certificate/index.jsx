@@ -2,7 +2,6 @@ import { Button, Paper, TextField, Typography, styled } from "@mui/material";
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { useState } from "react";
-import styles from "./styles.module.scss"
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../../pinata";
 import ModalComponent from "@components/Modal";
 import { useAuth } from "@context/auth";
@@ -26,10 +25,13 @@ export default function UploadCertificatePage() {
     const [open, setOpen] = useState(false);
     const [name, setname] = useState("Sample")
     const [message, setMessage] = useState("");
+    const [fileURL, setFileURL] = useState(null);
     const { auth } = useAuth()
     const handleChangeFile = async (e) => {
         try {
             console.log(e.target.files[0]);
+            console.log(URL.createObjectURL(e.target.files[0]));
+            setFileURL(URL.createObjectURL(e.target.files[0]));
             const response = await uploadFileToIPFS(e.target.files[0]);
             if (response.success === true) {
                 setFile(response.pinataURL);
@@ -39,7 +41,6 @@ export default function UploadCertificatePage() {
             console.log("Error during File upload: ", e);
         }
     }
-    console.log(file);
 
     async function uploadMetadataToIPFS() {
         if (!file) {
@@ -61,15 +62,12 @@ export default function UploadCertificatePage() {
         }
     }
 
-    let tokenURI;
-
     const finalSubmit = async (e) => {
         console.log("Hello");
         setOpen(false);
         let contract = auth.contract;
         try {
             const metaDataURL = await uploadMetadataToIPFS();
-            tokenURI = metaDataURL;
             let transaction = await contract.createToken(metaDataURL, receiverAddr);
             await transaction.wait();
             alert("Successfully sent the Certificate to the User");
@@ -158,7 +156,7 @@ export default function UploadCertificatePage() {
                             width: "100%"
                         }}
                     >
-                        <img src="https://gateway.pinata.cloud/ipfs/QmYd43TvzhkedRw3Wg2j3oxRGz1FicXn8bjt3DL9xDK8Bd" alt="Certificate" height="100%" width="100%"/>
+                        {fileURL && <img src={fileURL} alt="certificate" style={{ width: "100%" }} />}
                     </Paper>
                 </div>
 

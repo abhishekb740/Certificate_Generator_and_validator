@@ -8,6 +8,7 @@ import { ethers } from "ethers"
 import Marketplace from "@ABI/abi.json"
 import moment from 'moment/moment';
 import ModalComponent from '@components/Modal';
+import { useAuth } from '@context/auth';
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -22,10 +23,10 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 const data = [
-    "https://i.imgur.com/idG3CLO.png" ,
-    "https://i.imgur.com/RFeCLoi.png" ,
-    "https://i.imgur.com/XmfD44T.png" ,
-    "https://i.imgur.com/oTYOlAM.png" ,
+    "https://i.imgur.com/idG3CLO.png",
+    "https://i.imgur.com/RFeCLoi.png",
+    "https://i.imgur.com/XmfD44T.png",
+    "https://i.imgur.com/oTYOlAM.png",
 ];
 
 export default function IssueCertificatePage() {
@@ -39,7 +40,7 @@ export default function IssueCertificatePage() {
     const [image, setImage] = useState("")
     const [fileUrl, setFileUrl] = useState(null)
     const [message, updateMessage] = useState('');
-    const [index, setIndex] = useState(0) 
+    const [index, setIndex] = useState(0)
     const handleChangeSign = (e) => {
         setSign(URL.createObjectURL(e.target.files[0]))
     }
@@ -59,7 +60,7 @@ export default function IssueCertificatePage() {
             console.log("name or fileURL not set", receiverName, fileUrl);
             return;
         }
-        if(!receiverName) {
+        if (!receiverName) {
             setReceiverName("SAMPLE")
         }
         const nftJson = {
@@ -216,23 +217,23 @@ export default function IssueCertificatePage() {
                         }}
                     >
                         <div id={styles.certificateImage}>
-                            <input 
-                                type="text" 
-                                value={receiverName} 
-                                disabled="disabled" 
-                                className={styles.dataName} 
+                            <input
+                                type="text"
+                                value={receiverName}
+                                disabled="disabled"
+                                className={styles.dataName}
                             />
-                            <textarea 
-                                type="text" 
-                                value={receiverDes} 
-                                disabled="disabled" 
-                                className={styles.dataDes} 
+                            <textarea
+                                type="text"
+                                value={receiverDes}
+                                disabled="disabled"
+                                className={styles.dataDes}
                             />
-                            <input 
-                                type="text" 
-                                value={moment().format("DD-MM-YYYY")} 
-                                disabled="disabled" 
-                                className={styles.dataDate} 
+                            <input
+                                type="text"
+                                value={moment().format("DD-MM-YYYY")}
+                                disabled="disabled"
+                                className={styles.dataDate}
                             />
                             {sign && <img id={styles.sign} src={sign}></img>}
                             <img id={styles.cerData} src={data[index]}></img>
@@ -240,7 +241,7 @@ export default function IssueCertificatePage() {
                     </Paper>
                 </div>
             </Paper>
-            <ModalComponent 
+            <ModalComponent
                 open={modalOpen}
                 setOpen={setModalOpen}
                 finalSubmit={uploadImage}
