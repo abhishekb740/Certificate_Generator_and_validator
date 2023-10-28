@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
-import './css/nav.css';
-import { Link } from 'react-router-dom';
-import { ethers } from "ethers";
+import { faUser, faUsersBetweenLines } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser,faWallet,faUsersBetweenLines} from "@fortawesome/free-solid-svg-icons";
-//import styles from '../components/css/styles.module.css';
+import styles from "@styles/nav.module.scss";
+import { ethers } from "ethers";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
   const [connected, toggleConnect] = useState(false);
@@ -19,7 +18,9 @@ function Navbar() {
   }
 
   function updateButton() {
-    const ethereumButton = document.querySelector('.enableEthereumButton');
+    console.log(styles.enableEthereumButton)
+    const ethereumButton = document.querySelector(`.${styles.enableEthereumButton}`);
+    console.log(ethereumButton)
     ethereumButton.textContent = "Connected";
     ethereumButton.classList.remove("hover:bg-blue-70");
     ethereumButton.classList.remove("bg-blue-500");
@@ -28,13 +29,12 @@ function Navbar() {
   }
 
   async function connectWebsite() {
-
     const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-    if (chainId !== '0xaa36a7') {
+    if (chainId !== '0x33') {
       //alert('Incorrect network! Switch your metamask network to Rinkeby');
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0xaa36a7' }],
+        params: [{ chainId: '0x33' }],
       })
     }
     await window.ethereum.request({ method: 'eth_requestAccounts' })
@@ -63,7 +63,7 @@ function Navbar() {
   //});
   return (
     <>
-      <div id='nav'>
+      <div id={styles.nav}>
         <nav>
           <ul>
             <li>
@@ -71,22 +71,22 @@ function Navbar() {
             </li>
             <li className='link'>
               <Link to="/">
-                <FontAwesomeIcon icon={faUsersBetweenLines} style={{color: "#ebecf0",}} />
+                <FontAwesomeIcon icon={faUsersBetweenLines} style={{ color: "#ebecf0", }} />
                 Organisation
               </Link>
             </li>
             <li className='link'>
-              <FontAwesomeIcon icon={faUser} style={{color: "#ebecf0",}} />
+              <FontAwesomeIcon icon={faUser} style={{ color: "#ebecf0", }} />
               <Link to="/user">
                 User
               </Link>
             </li>
             <li>
-              <button className="enableEthereumButton" onClick={connectWebsite}>{connected ? "Connected" : "Connect Wallet"}</button>
+              <button className={styles.enableEthereumButton} onClick={connectWebsite}>{connected ? "Connected" : "Connect Wallet"}</button>
             </li>
           </ul>
 
-          <button className="enableEthereumButton" onClick={connectWebsite}>{connected ? "Connected" : "Connect Wallet"} </button>
+          <button className={styles.enableEthereumButton} onClick={connectWebsite}>{connected ? "Connected" : "Connect Wallet"} </button>
           <p>
             {currAddress !== "0xaa36a7" ? "Connected to" : "Not Connected. Please login"} {currAddress !== "0xaa36a7" ? (currAddress.substring(0, 15) + '...') : ""}
           </p>

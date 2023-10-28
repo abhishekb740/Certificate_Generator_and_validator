@@ -1,33 +1,43 @@
-import './App.css';
 import Organisation from './components/Organisation';
 import User from './components/User';
 import Navbar from './components/Navbar';
 import { Route, Routes } from 'react-router-dom';
-import { BrowserRouter } from 'react-router-dom';
 import Carousel from './components/Carousel';
 import Footer from './components/Footer';
-import '../node_modules/bootstrap-dark-5/dist/css/bootstrap-dark.min.css';
-import '../node_modules/bootstrap/dist/js/bootstrap.bundle';
-import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
+import IndexPage from '@pages';
+import RegisterPage from '@pages/register';
 
 function App() {
   return (
     <>
-    <BrowserRouter>
-    <Navbar/>
-    
-    <Carousel/>
-    
       <Routes>
-      <Route path='/' element = {<Organisation/>}/>
-      <Route path='/user' element = {<User/>}/>
+        <Route 
+          path='/user' 
+          exact 
+          element={(
+            <>
+              <Navbar />
+              <Carousel />
+              <User />
+              <Footer />
+            </>
+          )} 
+        />
+        <Route path='/test' exact element={<IndexPage />} />
+        <Route path='/register' exact element={<RegisterPage />} />
+        <Route 
+          path='/' 
+          exact 
+          element={(
+            <>
+              <Navbar />
+              <Carousel />
+              <Organisation />
+              <Footer />
+            </>
+          )} 
+        />
       </Routes>
-
-    <Footer/>
-    </BrowserRouter>
-
-    
-
     </>
   );
 }
