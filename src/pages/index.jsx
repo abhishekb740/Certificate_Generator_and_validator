@@ -6,11 +6,12 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { useState } from "react";
 import RegisterPage from "./register";
-import { Container } from "@mui/material";
+import { Container, Paper } from "@mui/material";
+import IssueCertificatePage from "./issue-certificate";
 
 const panels = {
     "Registration": <RegisterPage />,
-    "Issue Certificates": "2",
+    "Issue Certificates": <IssueCertificatePage />,
     "Issued Certificates": "3",
     "Transaction History": "4"
 }
@@ -36,18 +37,19 @@ export default function IndexPage() {
                     </Box>
                     {Object.keys(panels).map(e => (
                         <TabPanel key={e} value={e}>
-                            <Container
+                            <Paper
                                 sx={{
                                     display: "flex",
                                     justifyContent: "center",
                                     alignItems: "center",
                                     height: "80vh",
-                                    paddingTop: "3rem",
-                                    width: "100%"
+                                    paddingTop: "2rem",
+                                    width: "100%",
+                                    background: "inherit"
                                 }}
                             >
                                 {panels[e]}
-                            </Container>
+                            </Paper>
                         </TabPanel>
                     ))}
                 </TabContext>
