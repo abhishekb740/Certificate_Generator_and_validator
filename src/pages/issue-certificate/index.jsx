@@ -3,7 +3,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useState } from "react";
 import domToImage from "dom-to-image"
 import styles from "./styles.module.scss"
-import { uploadFileToIPFS, uploadJSONToIPFS } from "../pinata";
+import { uploadFileToIPFS, uploadJSONToIPFS } from "../../pinata";
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
