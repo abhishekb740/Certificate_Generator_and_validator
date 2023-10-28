@@ -5,6 +5,7 @@ import { useState } from "react";
 import styles from "./styles.module.scss"
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../../pinata";
 import ModalComponent from "@components/Modal";
+import { useAuth } from "@context/auth";
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -21,30 +22,65 @@ const VisuallyHiddenInput = styled('input')({
 export default function UploadCertificatePage() {
     const [receiverAddr, setReceiverAddr] = useState("")
     const [addressSaved, setAddressSaved] = useState(false)
-    const [image, setImage] = useState("")
     const [file, setFile] = useState(null);
     const [open, setOpen] = useState(false);
+    const [name, setname] = useState("Sample")
     const [message, setMessage] = useState("");
-
-    const handleChangeFile = async(e) =>{
-        try{
+    const { auth } = useAuth()
+    const handleChangeFile = async (e) => {
+        try {
             console.log(e.target.files[0]);
             const response = await uploadFileToIPFS(e.target.files[0]);
-            if(response.success === true){
+            if (response.success === true) {
                 setFile(response.pinataURL);
             }
         }
-        catch(e){
+        catch (e) {
             console.log("Error during File upload: ", e);
         }
     }
+    console.log(file);
 
-    const finalSubmit = (e) =>{
-        console.log("Hello");
-        setOpen(false);
+    async function uploadMetadataToIPFS() {
+        if (!file) {
+            console.log("name or fileURL not set", name, file);
+            return;
+        }
+        const nftJSON = {
+            name, image: file
+        };
+        try {
+            const response = await uploadJSONToIPFS(nftJSON);
+            if (response.success === true) {
+                console.log("Uploaded json to pinata", response);
+                return response.pinataURL;
+            }
+        }
+        catch (e) {
+            alert("Error uploading JSON metadata", e);
+        }
     }
 
-    const handleSubmit = async(e) =>{
+    let tokenURI;
+
+    const finalSubmit = async (e) => {
+        console.log("Hello");
+        setOpen(false);
+        let contract = auth.contract;
+        try {
+            const metaDataURL = await uploadMetadataToIPFS();
+            tokenURI = metaDataURL;
+            let transaction = await contract.createToken(metaDataURL, receiverAddr);
+            await transaction.wait();
+            alert("Successfully sent the Certificate to the User");
+        }
+        catch (e) {
+            console.log(e);
+            alert(e.reason);
+        }
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage("Are you sure you want to Submit?");
         setOpen(true);
@@ -122,6 +158,7 @@ export default function UploadCertificatePage() {
                             width: "100%"
                         }}
                     >
+                        <img src="https://gateway.pinata.cloud/ipfs/QmYd43TvzhkedRw3Wg2j3oxRGz1FicXn8bjt3DL9xDK8Bd" alt="Certificate" height="100%" width="100%"/>
                     </Paper>
                 </div>
 
