@@ -2,7 +2,6 @@ import { Button, Paper, TextField, Typography, styled } from "@mui/material";
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { useState } from "react";
-import styles from "./styles.module.scss"
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../../pinata";
 import ModalComponent from "@components/Modal";
 import { useAuth } from "@context/auth";
@@ -63,15 +62,12 @@ export default function UploadCertificatePage() {
         }
     }
 
-    let tokenURI;
-
     const finalSubmit = async (e) => {
         console.log("Hello");
         setOpen(false);
         let contract = auth.contract;
         try {
             const metaDataURL = await uploadMetadataToIPFS();
-            tokenURI = metaDataURL;
             let transaction = await contract.createToken(metaDataURL, receiverAddr);
             await transaction.wait();
             alert("Successfully sent the Certificate to the User");

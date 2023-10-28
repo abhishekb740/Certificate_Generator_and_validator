@@ -3,8 +3,8 @@ import axios from 'axios';
 //const key = process.env.REACT_APP_PINATA_KEY;
 //const secret = process.env.REACT_APP_PINATA_SECRET;
 //console.log(key);
-const key = "b2de65906af6773e4a0e";
-const secret = "8c7a3c4437b683d0fcd4a8e1bdb6cbac0d91040bfe906b3b4296f4369a819f7c";
+const key = "79806625a3954bbe64ac";
+const secret = "215b3c3587b8f19484e1c593425419d9c4770c7797807247ff6888e7b2acc774";
 
 //const FormData = require('form-data');
 import FormData from "form-data";
