@@ -13,14 +13,41 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import Certificate from "@ABI/abi.json";
 import { ethers } from "ethers";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@context/auth';
 
 export default function Header() {
-    const { setAuth } = useAuth() 
+    const { setAuth } = useAuth()
     const [accountAddr, setAccountAddr] = useState("");
     const [contract, setContract] = useState(null)
     const [provider, setProvider] = useState(null);
+
+    useEffect(() => {
+        const getProvider = async () => {
+            const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+            if (chainId !== '0x33') {
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0x33' }],
+                })
+            }
+            const _provider = new ethers.providers.Web3Provider(window.ethereum);
+            setProvider(_provider);
+            if (_provider) {
+                const signer = _provider.getSigner();
+                console.log(signer);
+                const accounts = await window.ethereum.request({
+                    method: 'eth_requestAccounts'
+                })
+                setAccountAddr(accounts[0]);
+                setContract(new ethers.Contract(Certificate.address, Certificate.abi, signer));
+                console.log(contract);
+                setAuth({ accountAddr, contract, provider })
+            }
+        }
+        getProvider();
+    }, [])
+
     const connectToMetamask = async () => {
         const chainId = await window.ethereum.request({ method: 'eth_chainId' });
         if (chainId !== '0x33') {
@@ -29,29 +56,11 @@ export default function Header() {
                 params: [{ chainId: '0x33' }],
             })
         }
-        console.log("Heloooooooo");
-        await window.ethereum.request({ method: 'eth_requestAccounts' }).then(async () => {
-            setProvider(new ethers.providers.Web3Provider(window.ethereum));
-            if (await provider) {
-                window.ethereum.on('chainChanged', () => {
-                    window.location.reload();
-                })
-                window.ethereum.on('accountsChanged', () => {
-                    window.location.reload();
-                })
-                const signer = provider.getSigner();
-                console.log(signer);
-                const addr = await signer.getAddress();
-                console.log(addr);
-                setAccountAddr(addr);
-                setContract(new ethers.Contract(Certificate.address, Certificate.abi, signer));
-                console.log(contract);
-                setAuth({ accountAddr, contract, provider })
-            }
-            else {
-                alert("Please Install Metamask First");
-            }
+        const accounts = await window.ethereum.request({
+            method: 'eth_requestAccounts'
         })
+        console.log(accounts[0]);
+        setAccountAddr(accounts[0]);
     }
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
