@@ -1,9 +1,9 @@
-import { Button, Paper, TextField, Typography, styled } from "@mui/material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { Button, Paper, TextField, Typography, styled } from "@mui/material";
+import domToImage from "dom-to-image";
 import { useState } from "react";
-import domToImage from "dom-to-image"
-import styles from "./styles.module.scss"
-import { uploadFileToIPFS, uploadJSONToIPFS } from "../pinata";
+import { uploadFileToIPFS, uploadJSONToIPFS } from "../../pinata";
+import styles from "./styles.module.scss";
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -25,6 +25,8 @@ export default function IssueCertificatePage() {
 
     const [sign, setSign] = useState(null)
     const [image, setImage] = useState("")
+    const [fileUrl, setFileUrl] = useState(null)
+    const [message, updateMessage] = useState('');
     const handleChangeSign = (e) => {
         setSign(URL.createObjectURL(e.target.files[0]))
     }
@@ -38,10 +40,24 @@ export default function IssueCertificatePage() {
         return new File([u8arr], 'a.png', { type: mime });
     }
 
-    async function generateImage(e) {
+    async function uploadImage(e) {
         e.preventDefault()
         await domToImage.toJpeg(document.getElementById(styles.certificateImage))
-        .then(res => setImage(dataUrlToFile(res)))
+            .then(res => setImage(dataUrlToFile(res)))
+            .then(async () => {
+                updateMessage("Uploading image Please wait");
+                try {
+                    const response = await uploadFileToIPFS(img);
+                    if (response.success === true) {
+                        updateMessage("Uploaded Img Successfully");
+                        setFileUrl(response.pinataURL);
+                    }
+                }
+                catch (err) {
+                    updateMessage("Failed to upload image please try again");
+                    console.log("error during file upload : ", err);
+                }
+            })
     }
 
     return (
