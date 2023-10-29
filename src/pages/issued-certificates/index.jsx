@@ -89,6 +89,7 @@ export default function IssuedCertificatesPage() {
                             gap: "2rem",
                             padding: 0,
                             background: "inherit",
+                            width: "100%"
                         }}
                     >
                         <TextField
@@ -99,6 +100,7 @@ export default function IssuedCertificatesPage() {
                             value={address}
                             type={addressSaved ? "password" : "text"}
                             disabled={addressSaved}
+                            fullWidth
                         />
                         <Button variant="contained" onClick={() => setAddressSaved(prev => !prev)}>
                             {addressSaved ? "Update" : "Save"}
