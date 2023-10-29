@@ -77,7 +77,7 @@ export default function IssuedCertificatesPage() {
                         display: "flex",
                         flexDirection: "column",
                         gap: "1.5rem",
-                        width: "30%",
+                        width: "50%",
                         alignItems: "flex-start",
                         paddingLeft: "2rem"
                     }}
