@@ -1,26 +1,26 @@
-import Layout from "./layout";
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import { Paper } from "@mui/material";
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
 import { useState } from "react";
-import RegisterPage from "./register";
-import { Container, Paper } from "@mui/material";
 import IssueCertificatePage from "./issue-certificate";
-import UploadCertificatePage from "./upload-certificate";
 import IssuedCertificatesPage from "./issued-certificates";
+import Layout from "./layout";
+import RegisterPage from "./register";
+import UploadCertificatePage from "./upload-certificate";
 
 const panels = {
     "Registration": <RegisterPage />,
     "Issue Certificates": <IssueCertificatePage />,
-    "Upload Certificates": <UploadCertificatePage/>,
+    "Upload Certificates": <UploadCertificatePage />,
     "Issued Certificates": <IssuedCertificatesPage />,
     // "Transaction History": "5"
 }
 
 export default function IndexPage() {
-    
+
     const [value, setValue] = useState(Object.keys(panels)[0]);
     const handleChange = (_, newValue) => {
         setValue(newValue);
@@ -28,7 +28,7 @@ export default function IndexPage() {
 
     return (
         <Layout>
-            <Box sx={{ width: '100%', typography: 'h2'}} >
+            <Box sx={{ width: '100%', typography: 'h2' }} >
                 <TabContext value={value}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: "center" }}>
                         <TabList onChange={handleChange}>
