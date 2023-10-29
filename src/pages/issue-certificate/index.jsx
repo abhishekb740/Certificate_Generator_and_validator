@@ -43,12 +43,12 @@ export default function IssueCertificatePage() {
     const [index, setIndex] = useState(0)
     const {auth} = useAuth();
     const handleChangeSign = (e) => {
-        if(auth.contract.isOrganizationVerified[auth.accountAddr]){
+        // if(auth.contract.isOrganizationVerified[auth.accountAddr]){
             setSign(URL.createObjectURL(e.target.files[0]))
-        }
-        else{
-            alert("You are not Verified")
-        }
+        // }
+        // else{
+        //     alert("You are not Verified")
+        // }
     }
 
     async function dataUrlToFile(url) {
@@ -88,7 +88,7 @@ export default function IssueCertificatePage() {
     }
 
     async function uploadImage(e) {
-        if(auth.contract.isOrganizationVerified[auth.accountAddr]){
+        // if(auth.contract.isOrganizationVerified[auth.accountAddr]){
             e.preventDefault()
             await domToImage.toJpeg(document.getElementById(styles.certificateImage))
             .then(async (res) => {
@@ -129,10 +129,10 @@ export default function IssueCertificatePage() {
                     alert("upload error", e);
                 }
             })
-        }
-        else{
-            alert("You are not Verified Organization");
-        }
+        // }
+        // else{
+        //     alert("You are not Verified Organization");
+        // }
     }
 
     return (
