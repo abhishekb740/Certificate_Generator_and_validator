@@ -5,7 +5,7 @@ import useSWRMutation from "swr/mutation";
 
 export default function IssuedCertificatesPage() {
     const { auth } = useAuth()
-
+    console.log(auth)
     const [address, setAddress] = useState("")
     const [addressSaved, setAddressSaved] = useState(false)
     const [userType, setUserType] = useState("")
