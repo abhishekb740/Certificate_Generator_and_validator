@@ -98,7 +98,12 @@ export default function UploadCertificatePage() {
                 }}
                 className="something"
             >
-                <Typography component="div" variant="h3">Create your own certificate</Typography>
+               <div style={{ display: "flex", alignItems: "flex-end", gap: 10 }}>
+                    <Typography component="div" variant="h3">Upload a new certificate</Typography>
+                    <div style={{ paddingBottom: 5 }}>
+                        <Typography component="div" variant="h6" color="primary">To a user</Typography>
+                    </div>
+                </div>
                 <div
                     style={{
                         width: "100%",
