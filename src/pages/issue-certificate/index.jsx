@@ -8,6 +8,7 @@ import { ethers } from "ethers"
 import Marketplace from "@ABI/abi.json"
 import moment from 'moment/moment';
 import ModalComponent from '@components/Modal';
+import { useAuth } from "@context/auth";
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -40,9 +41,14 @@ export default function IssueCertificatePage() {
     const [fileUrl, setFileUrl] = useState(null)
     const [message, updateMessage] = useState('');
     const [index, setIndex] = useState(0)
-
+    const {auth} = useAuth();
     const handleChangeSign = (e) => {
-        setSign(URL.createObjectURL(e.target.files[0]))
+        if(auth.contract.isOrganizationVerified[auth.accountAddr]){
+            setSign(URL.createObjectURL(e.target.files[0]))
+        }
+        else{
+            alert("You are not Verified")
+        }
     }
 
     async function dataUrlToFile(url) {
@@ -82,8 +88,9 @@ export default function IssueCertificatePage() {
     }
 
     async function uploadImage(e) {
-        e.preventDefault()
-        await domToImage.toJpeg(document.getElementById(styles.certificateImage))
+        if(auth.contract.isOrganizationVerified[auth.accountAddr]){
+            e.preventDefault()
+            await domToImage.toJpeg(document.getElementById(styles.certificateImage))
             .then(async (res) => {
                 const img = await dataUrlToFile(res)
                 await setImage(img)
@@ -122,6 +129,10 @@ export default function IssueCertificatePage() {
                     alert("upload error", e);
                 }
             })
+        }
+        else{
+            alert("You are not Verified Organization");
+        }
     }
 
     return (
