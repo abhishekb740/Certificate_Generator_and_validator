@@ -16,7 +16,7 @@ const panels = {
     "Issue Certificates": <IssueCertificatePage />,
     "Upload Certificates": <UploadCertificatePage/>,
     "Issued Certificates": <IssuedCertificatesPage />,
-    "Transaction History": "5"
+    // "Transaction History": "5"
 }
 
 export default function IndexPage() {

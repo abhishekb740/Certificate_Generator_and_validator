@@ -18,6 +18,7 @@ function User() {
     let transaction = await contract.getUserCertificates(address);
     console.log(transaction);
     const items = await Promise.all(transaction.map(async i => {
+      console.log(i.tokenId)
       var tokenURI = await contract.tokenURI(i.tokenId);
       console.log("getting this tokenUri", tokenURI);
       tokenURI = GetIpfsUrlFromPinata(tokenURI);

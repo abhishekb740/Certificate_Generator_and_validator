@@ -1,5 +1,5 @@
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { Button, Paper, TextField, Typography, styled } from "@mui/material";
+import { Button, Paper, TextField, Typography, styled, Card, CardMedia, CardActions, CardContent } from "@mui/material";
 import domToImage from "dom-to-image";
 import { useState } from "react";
 import styles from "./styles.module.scss";
@@ -8,7 +8,6 @@ import { ethers } from "ethers"
 import Marketplace from "@ABI/abi.json"
 import moment from 'moment/moment';
 import ModalComponent from '@components/Modal';
-import { useAuth } from '@context/auth';
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -41,6 +40,7 @@ export default function IssueCertificatePage() {
     const [fileUrl, setFileUrl] = useState(null)
     const [message, updateMessage] = useState('');
     const [index, setIndex] = useState(0)
+
     const handleChangeSign = (e) => {
         setSign(URL.createObjectURL(e.target.files[0]))
     }
@@ -137,7 +137,12 @@ export default function IssueCertificatePage() {
                     padding: "1rem",
                 }}
             >
-                <Typography component="div" variant="h3">Create your own certificate</Typography>
+                <div style={{ display: "flex", alignItems: "flex-end", gap: 10 }}>
+                    <Typography component="div" variant="h3">Issue a new certificate</Typography>
+                    <div style={{ paddingBottom: 5 }}>
+                        <Typography component="div" variant="h6" color="primary">To a user</Typography>
+                    </div>
+                </div>
                 <div
                     style={{
                         width: "100%",
@@ -240,6 +245,63 @@ export default function IssueCertificatePage() {
                             />
                             {sign && <img id={styles.sign} src={sign}></img>}
                             <img id={styles.cerData} src={data[index]}></img>
+                        </div>
+                    </Paper>
+                </div>
+                <div>
+                    <Paper
+                        sx={{
+                            width: "100%",
+                            minHeight: "10vh",
+                            padding: "1rem",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "1rem"
+                        }}
+                    >
+                        <Typography component="div" variant="h5">Available Templates</Typography>
+                        <div
+                            style={{
+                                display: "flex",
+                                gap: "1rem",
+                                flexWrap: "wrap",
+                                flex: "0 1",
+                                justifyContent: "space-evenly"
+                            }}
+                        >
+                            {data.map((e, i) => (
+                                <Card
+                                    sx={{
+                                        maxWidth: 450,
+                                        gap: "1rem",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        background: "#2e2e2e",
+                                    }}
+                                    key={e}
+                                >
+                                    <CardMedia
+                                        sx={{ width: 300 }}
+                                        image={e}
+                                        title={`Certificate ${i + 1}`}
+                                        component="img"
+                                    />
+                                    <div
+                                        style={{
+                                            padding: 5,
+                                            display: "flex",
+                                            justifyContent: "center"
+                                        }}
+                                    >
+                                        <Typography variant="body2" color="text.secondary">{`Certificate ${i + 1}`}</Typography>
+                                    </div>
+                                    <CardActions>
+                                        <Button size='small' variant='contained' onClick={() => setIndex(i)} fullWidth>
+                                            Choose
+                                        </Button>
+                                    </CardActions>
+                                </Card>
+                            ))}
                         </div>
                     </Paper>
                 </div>
