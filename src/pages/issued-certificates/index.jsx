@@ -89,6 +89,7 @@ export default function IssuedCertificatesPage() {
                             gap: "2rem",
                             padding: 0,
                             background: "inherit",
+                            width: "100%"
                         }}
                     >
                         <TextField
