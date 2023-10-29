@@ -2,6 +2,8 @@ import { useAuth } from "@context/auth";
 import { Button, FormControl, FormControlLabel, FormLabel, Paper, Radio, RadioGroup, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import useSWRMutation from "swr/mutation";
+import { GetIpfsUrlFromPinata } from "@utils";
+import axios from "axios";
 
 export default function IssuedCertificatesPage() {
     const { auth } = useAuth()
@@ -9,28 +11,86 @@ export default function IssuedCertificatesPage() {
     const [address, setAddress] = useState("")
     const [addressSaved, setAddressSaved] = useState(false)
     const [userType, setUserType] = useState("")
+    const [data, updateData] = useState([]);
     // const [certificates, setCertificates] = useState(null)
 
     const getData = async (url) => {
-        if(!address) {
+        if (!address) {
             alert("Please enter address")
             return
         }
         let getCertificates;
-        if(userType === "org") {
+        if (userType === "org") {
             getCertificates = auth.contract.getOrganisationCertificates
         }
-        else if(userType === "user") {
+        else if (userType === "user") {
             getCertificates = auth.contract.getUserCertificates
         }
         else {
             alert("Invalid user type")
             return
         }
-        await getCertificates(address).then(console.log).catch(console.log)
+        // await getCertificates(address).then(console.log).catch(console.log)
+        fetchData(await getCertificates(address).then(console.log).catch(console.log));
     }
     const { trigger: handleSubmit, data: certificates } = useSWRMutation("adas", getData)
     console.log(certificates)
+
+    const fetchData = async (certificates) => {
+        const items = await Promise.all(certificates.map(async i => {
+            var tokenURI = await auth.contract.tokenURI(i.tokenId);
+            console.log("getting this tokenUri", tokenURI);
+            tokenURI = GetIpfsUrlFromPinata(tokenURI);
+            let meta = await axios.get(tokenURI);
+            meta = meta.data;
+            let item = {
+                creator: i.creator,
+                user: i.user,
+                image: meta.image,
+            }
+            console.log(meta.image);
+            return item;
+        }))
+        updateData(items);
+    }
+
+    // async function showCertificates() {
+    //     //console.log("hello");
+    //     if (!address) {
+    //         alert("Please enter address")
+    //         return
+    //     }
+    //     let getCertificates;
+    //     if (userType === "org") {
+    //         getCertificates = auth.contract.getOrganisationCertificates
+    //     }
+    //     else if (userType === "user") {
+    //         getCertificates = auth.contract.getUserCertificates
+    //     }
+    //     else {
+    //         alert("Invalid user type")
+    //         return
+    //     }
+    //     const certificates = await getCertificates(address).then(console.log).catch(console.log)
+    //     fetchData(await getCertificates(address).then(console.log).catch(console.log));
+    //     const items = await Promise.all(certificates.map(async i => {
+    //       var tokenURI = await auth.contract.tokenURI(i.tokenId);
+    //       console.log("getting this tokenUri", tokenURI);
+    //       tokenURI = GetIpfsUrlFromPinata(tokenURI);
+    //       let meta = await axios.get(tokenURI);
+    //       meta = meta.data;
+    
+    //       let item = {
+    //         creator: i.creator,
+    //         user: i.user,
+    //         image: meta.image,
+    //       }
+    
+    //       console.log(meta.image);
+    //       return item;
+    //     }))
+    //     updateData(items);
+    //   }
 
     return (
         <div
