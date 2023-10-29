@@ -40,9 +40,8 @@ export default function Header() {
                     method: 'eth_requestAccounts'
                 })
                 setAccountAddr(accounts[0]);
-                setContract(new ethers.Contract(Certificate.address, Certificate.abi, signer));
                 console.log(contract);
-                setAuth({ accountAddr, contract, provider })
+                setAuth({ accountAddr: accounts[0], contract: new ethers.Contract(Certificate.address, Certificate.abi, signer), provider: _provider })
             }
         }
         getProvider();
