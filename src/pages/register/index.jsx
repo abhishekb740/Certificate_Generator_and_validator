@@ -123,7 +123,7 @@ export default function RegisterPage() {
                             onChange={handleChangeFormData}
                             error={!isValid.registrationNo}
                             helperText={!isValid.registrationNo && "Registration No accepts 12 digit number"}
-                            value={formData.registrationNo}
+                            // value={formData.registrationNo}
                         />
                         <TextField
                             placeholder="Address"
@@ -148,7 +148,7 @@ export default function RegisterPage() {
                             onChange={handleChangeFormData}
                             error={!isValid.pinCode}
                             helperText={!isValid.pinCode && "Pin code accepts 6 digit number"}
-                            value={formData.pinCode}
+                            // value={formData.pinCode}
                         />
                     </Container>
                     <Container>
