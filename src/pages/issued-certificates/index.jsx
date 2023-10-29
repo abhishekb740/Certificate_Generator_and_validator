@@ -99,6 +99,7 @@ export default function IssuedCertificatesPage() {
                             value={address}
                             type={addressSaved ? "password" : "text"}
                             disabled={addressSaved}
+                            fullWidth
                         />
                         <Button variant="contained" onClick={() => setAddressSaved(prev => !prev)}>
                             {addressSaved ? "Update" : "Save"}
